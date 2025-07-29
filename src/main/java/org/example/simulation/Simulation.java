@@ -14,6 +14,7 @@ public class Simulation {
     private final WorldConsoleRenderer renderer;
     private boolean isRunning = false;
     private final Scanner scanner = new Scanner(System.in);
+    private int turnCount = 0;
 
     public Simulation(int width, int height) {
         this.world = new World(width, height);
@@ -23,9 +24,10 @@ public class Simulation {
 
     // Вариант 1: Запуск одного хода
     public void nextTurn() {
+        turnCount++;
         world.makeAll();
         renderer.render();
-        System.out.println("Ход завершен");
+        System.out.printf("Ход #%d завершен\n", turnCount);
     }
 
     // Вариант 2: Запуск бесконечного цикла
@@ -36,12 +38,12 @@ public class Simulation {
         Thread simulationThread = new Thread(() -> {
             while (isRunning) {
                 nextTurn();
+                System.out.printf("Нажмите %s для паузы \n", PAUSE);
                 try {
-                    Thread.sleep(1000); // Пауза 1 секунда между ходами
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                System.out.printf("Нажмите %s для паузы \n", PAUSE);
             }
         });
         simulationThread.start();
