@@ -15,17 +15,13 @@ public class Pathfinding {
             return start;
         }
 
-        // Очередь для BFS-поиска
         Queue<Coordinates> queue = new LinkedList<>();
-        // Отслеживание посещенных клеток
         Set<Coordinates> visited = new HashSet<>();
-        // Для восстановления пути
         Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
 
         queue.add(start);
         visited.add(start);
 
-        // 4 направления движения (без диагоналей)
         int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
         while (!queue.isEmpty()) {
@@ -37,7 +33,7 @@ public class Pathfinding {
                         current.y + dir[1]
                 );
 
-                // Пропускаем неподходящие клетки
+
                 if (!isValidMove(neighbor, world, visited)) {
                     continue;
                 }
@@ -46,21 +42,16 @@ public class Pathfinding {
                 queue.add(neighbor);
                 cameFrom.put(neighbor, current);
 
-                // Если достигли цели
                 if (neighbor.equals(goal)) {
                     return reconstructPath(start, neighbor, cameFrom);
                 }
             }
         }
 
-        return null; // Путь не найден
+        return null;
     }
 
     private static boolean isValidMove(Coordinates coord, World world, Set<Coordinates> visited) {
-        // Проверяем что клетка:
-        // 1. В пределах мира
-        // 2. Не посещена
-        // 3. Не содержит препятствий (деревья, хищники)
         return world.inBounds(coord) &&
                 !visited.contains(coord) &&
                 !world.getTree().containsKey(coord) &&
@@ -71,10 +62,9 @@ public class Pathfinding {
                                                Coordinates goal,
                                                Map<Coordinates, Coordinates> cameFrom) {
         Coordinates current = goal;
-        // Идем назад от цели к старту
         while (!cameFrom.get(current).equals(start)) {
             current = cameFrom.get(current);
         }
-        return current; // Возвращаем первый шаг от старта
+        return current;
     }
 }
