@@ -1,7 +1,5 @@
 package org.example.world;
 
-import java.util.PrimitiveIterator;
-
 public class WorldConsoleRenderer {
     private final World world;
 
