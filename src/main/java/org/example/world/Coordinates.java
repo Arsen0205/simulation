@@ -34,11 +34,11 @@ public class Coordinates {
     public boolean isAdjacent(Coordinates other) {
         int dx = Math.abs(this.x - other.x);
         int dy = Math.abs(this.y - other.y);
-        return (dx + dy == 1); // соседняя клетка (вверх/вниз/влево/вправо)
+        return (dx + dy == 1);
     }
 
     public int distanceTo(Coordinates other) {
-        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y); // Манхэттенское расстояние
+        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
     }
 
 
